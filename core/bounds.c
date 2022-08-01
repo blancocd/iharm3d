@@ -16,10 +16,10 @@
 #endif
 
 
-#if X1L_BOUND != PERIODIC && X1L_BOUND != OUTFLOW
+#if X1L_BOUND != PERIODIC && X1L_BOUND != OUTFLOW && X1L_BOUND != HUBBLE
 #error "Unsupported X1L_BOUND"
 #endif
-#if X1R_BOUND != PERIODIC && X1R_BOUND != OUTFLOW && X1R_BOUND != USER
+#if X1R_BOUND != PERIODIC && X1R_BOUND != OUTFLOW && X1R_BOUND != USER  && X1L_BOUND != HUBBLE
 #error "Unsupported X1R_BOUND"
 #endif
 
@@ -65,6 +65,8 @@ void set_bounds(struct GridGeom *G, struct FluidState *S)
             S->P[B1][k][j][i] *= rescale;
             S->P[B2][k][j][i] *= rescale;
             S->P[B3][k][j][i] *= rescale;
+#elif X1L_BOUND == HUBBLE
+            get_prim_hubble(i, j, k, S->P);
 #endif
         }
       }
@@ -110,6 +112,8 @@ void set_bounds(struct GridGeom *G, struct FluidState *S)
           S->P[B3][k][j][i] *= rescale;
 #elif X1R_BOUND == USER
           bound_gas_prob_x1r(i, j, k, S->P, G);
+#elif X1R_BOUND == HUBBLE
+          get_prim_hubble(i, j, k, S->P);
 #endif
         }
       }

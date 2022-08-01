@@ -161,6 +161,7 @@
 #define PERIODIC (1)
 #define POLAR    (2)
 #define USER     (3)
+#define HUBBLE   (4)
 
 // Metric
 #define MINKOWSKI (0)
@@ -527,6 +528,7 @@ void set_problem_params();
 void init(struct GridGeom *G, struct FluidState *S);
 // Boundary condition (currently used for Bondi flow)
 void bound_gas_prob_x1r(int i, int j, int k, GridPrim  P, struct GridGeom *G);
+void get_prim_hubble(int i, int j, int k, GridPrim P);
 void save_problem_data();
 
 // random.c

@@ -1,0 +1,29 @@
+### RUNTIME PARAMETERS ###
+
+# COORDINATES
+[dbl] tf = 1000.
+[dbl] dt = 1.0e-06
+[dbl] x1Min = 0.0
+[dbl] x1Max = 1.0
+[dbl] x2Min = -0.01
+[dbl] x2Max = 0.01
+[dbl] x3Min = -0.01
+[dbl] x3Max = 0.01
+
+# FLUID
+[dbl] gam = 1.666667
+[dbl] cour = 0.9
+
+# OUTPUT
+[dbl] DTd = 0.5
+[dbl] DTf = 10.0
+[dbl] DTl = 0.5
+[int] DTr = 100
+[int] DTp = 10
+
+# PROBLEM
+[dbl] rho0 = 1
+[dbl] v0 = 1e-3
+[dbl] ug0 = 1e-3
+[int] set_tlim = 1
+[dbl] dyntimes = 1.
