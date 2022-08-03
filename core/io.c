@@ -15,13 +15,13 @@
 
 // TODO move bsq to this scope?
 
-#if DEBUG
+// #if DEBUG
 #define OUT_H5_TYPE H5T_IEEE_F64LE
 #define OUT_TYPE double
-#else
-#define OUT_H5_TYPE H5T_IEEE_F32LE
-#define OUT_TYPE float
-#endif
+// #else
+// #define OUT_H5_TYPE H5T_IEEE_F32LE
+// #define OUT_TYPE float
+// #endif
 
 #define HDF_STR_LEN 20
 

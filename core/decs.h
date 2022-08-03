@@ -342,6 +342,8 @@ extern int global_stop[3];
   KLOOP JLOOP ILOOP
 #define ZLOOPALL \
   KLOOPALL JLOOPALL ILOOPALL
+#define ZLOOPIALL \
+  KLOOP JLOOP ILOOPALL
 // Transpose loops for forward-index output
 #define ZLOOP_OUT \
   ILOOP JLOOP KLOOP

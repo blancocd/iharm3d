@@ -65,18 +65,18 @@ void pack_write_int(int in[N3+2*NG][N2+2*NG][N1+2*NG], const char* name)
 // Reverse and write a backwards-index len,N{3,2,1}-size array of ints (GridVector or GridPrim) to a file
 void pack_write_vector(double in[][N3+2*NG][N2+2*NG][N1+2*NG], int len, const char* name, hsize_t hdf5_type)
 {
-  void *out = calloc((N1+2*NG)*(N2+2*NG)*(N3+2*NG)*len, sizeof(hdf5_type));
+  void *out = calloc((N1+2*NG)*N2*N3*len, sizeof(hdf5_type));
 
   int ind = 0;
   if (hdf5_type == H5T_IEEE_F64LE) {
-    ZLOOPALL {
+    ZLOOPIALL {
       for (int mu=0; mu < len; mu++) {
         ((double*) out)[ind] = in[mu][k][j][i];
         ind++;
       }
     }
   } else if (hdf5_type == H5T_IEEE_F32LE) {
-    ZLOOPALL {
+    ZLOOPIALL {
       for (int mu=0; mu < len; mu++) {
         ((float*) out)[ind] = (float) in[mu][k][j][i];
         ind++;
@@ -87,9 +87,9 @@ void pack_write_vector(double in[][N3+2*NG][N2+2*NG][N1+2*NG], int len, const ch
     exit(-1);
   }
 
-  hsize_t fdims[] = {N1TOT+2*NG, N2TOT+2*NG, N3TOT+2*NG, len};
+  hsize_t fdims[] = {N1TOT+2*NG, N2TOT, N3TOT, len};
   hsize_t fstart[] = {global_start[0], global_start[1], global_start[2], 0};
-  hsize_t fcount[] = {N1+2*NG, N2+2*NG, N3+2*NG, len};
+  hsize_t fcount[] = {N1+2*NG, N2, N3, len};
   hsize_t mstart[] = {0, 0, 0, 0};
 
   hdf5_write_array(out, name, 4, fdims, fstart, fcount, fcount, mstart, hdf5_type);
