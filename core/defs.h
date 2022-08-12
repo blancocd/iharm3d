@@ -58,6 +58,13 @@ int nthreads;
 double game, gamp;
 double fel0;
 double tptemin, tptemax;
+// Array of electron heating model flags (need it to call get_fels())
+int eFlagsArray[] = {CONSTANT, KAWAZURA, WERNER, ROWAN, SHARMA};
+// Array of electron heating model names (need it to assign primNames)
+char eNamesArray[NUM_E_MODELS][20] = {"CONSTANT", "KAWAZURA", "WERNER", "ROWAN", "SHARMA"};
+#if (E_MODELS & CONSTANT)
+double fel_constant;
+#endif
 #endif
 
 int global_start[3];

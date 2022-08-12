@@ -7,12 +7,12 @@
  ******************************************************************************/
 
 /* GLOBAL RESOLUTION */
-#define N1TOT 128
-#define N2TOT 128
+#define N1TOT 2000
+#define N2TOT 1
 #define N3TOT 1
 
 /* MPI DECOMPOSITION */
-/* COUNTERINTUITIVE: Split N3, N2, N1 order to keep k smaller than i,j*/
+/* DECOMPOSE IN N3 FIRST! Small leading array sizes for linear access */
 #define N1CPU 1
 #define N2CPU 1
 #define N3CPU 1
@@ -20,8 +20,7 @@
 /* METRIC
  *   MINKOWSKI, MKS
  */
-#define METRIC MKS
-#define DEREFINE_POLES 1
+#define METRIC MINKOWSKI
 
 /*
  * FLOORS
@@ -58,10 +57,7 @@
  */
 #define X1L_BOUND OUTFLOW
 #define X1R_BOUND OUTFLOW
-#define X2L_BOUND POLAR
-#define X2R_BOUND POLAR
+#define X2L_BOUND PERIODIC
+#define X2R_BOUND PERIODIC
 #define X3L_BOUND PERIODIC
 #define X3R_BOUND PERIODIC
-
-#define X1L_INFLOW 0
-#define X1R_INFLOW 0

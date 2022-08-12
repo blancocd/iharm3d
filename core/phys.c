@@ -1,8 +1,9 @@
 /******************************************************************************
  *                                                                            *
- * METRIC.C                                                                   *
+ * PHYS.C                                                                     *
  *                                                                            *
- * HELPER FUNCTIONS FOR METRIC TENSORS                                        *
+ * COMPUTES PHYSICAL QUANTITIES: STRESS-ENERGY TENSOR, U(P), FLUXES,          * 
+ * 4-VECTORS, LORENTZ FACTOR, MAGNETOSONIC VELOCITY, SOURCE TERMS             *
  *                                                                            *
  ******************************************************************************/
 
@@ -54,8 +55,8 @@ void prim_to_flux(struct GridGeom *G, struct FluidState *S, int i, int j, int k,
                       S->bcon[dir][k][j][i]*S->ucon[3][k][j][i];
 
 #if ELECTRONS
-  for (int idx = KEL0; idx < NVAR ; idx++) {
-    flux[idx][k][j][i] = flux[RHO][k][j][i]*S->P[idx][k][j][i];
+  for (int ip = KTOT  + 1; ip < NVAR ; ip++) {
+    flux[ip][k][j][i] = flux[RHO][k][j][i]*S->P[ip][k][j][i];
   }
   flux[KTOT][k][j][i] = flux[RHO][k][j][i]*S->P[KTOT][k][j][i];
 #endif
@@ -103,8 +104,8 @@ void prim_to_flux_vec(struct GridGeom *G, struct FluidState *S, int dir, int loc
 #pragma omp for collapse(3)
   ZSLOOP(kstart, kstop, jstart, jstop, istart, istop) {
     // RHO already includes a factor of gdet!
-    for (int idx = KEL0; idx < NVAR ; idx++) {
-      flux[idx][k][j][i] = flux[RHO][k][j][i]*S->P[idx][k][j][i];
+    for (int ip = KTOT + 1; ip < NVAR ; ip++) {
+      flux[ip][k][j][i] = flux[RHO][k][j][i]*S->P[ip][k][j][i];
     }
     flux[KTOT][k][j][i] = flux[RHO][k][j][i]*S->P[KTOT][k][j][i];
   }
@@ -222,7 +223,7 @@ inline void mhd_vchar(struct GridGeom *G, struct FluidState *S, int i, int j, in
   int loc, int dir, GridDouble cmax, GridDouble cmin)
 {
   double discr, vp, vm, bsq, ee, ef, va2, cs2, cms2, rho, u;
-  double Acov[NDIM], Bcov[NDIM], Acon[NDIM], Bcon[NDIM];
+  double Acov[NDIM], Bcov[NDIM], Acon[NDIM], Bcon[NDIM]; 
   double Asq, Bsq, Au, Bu, AB, Au2, Bu2, AuBu, A, B, C;
 
   DLOOP1 {
